@@ -64,18 +64,14 @@ class ApiTestingDemoTest {
         @Test
         @DisplayName("Should return 200 OK and empty list when no users exist")
         void shouldReturnEmptyListWhenNoUsers() {
-            // Arrange
             when(userService.getAllUsers()).thenReturn(Collections.emptyList());
 
-            // Act
             ResponseEntity<List<User>> response = userController.getAllUsers();
 
-            // Assert
             assertNotNull(response);
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertTrue(response.getBody().isEmpty());
 
-            // Verify
             verify(userService).getAllUsers();
         }
     }
@@ -87,21 +83,17 @@ class ApiTestingDemoTest {
         @Test
         @DisplayName("Should return 201 Created and the saved user when request body is valid")
         void shouldCreateUserWhenValid() {
-            // Arrange
             User requestUser = new User(null, "Alice", "alice", "alice@example.com", "123456", "alice.com");
             User savedUser = new User(1L, "Alice", "alice", "alice@example.com", "123456", "alice.com");
             when(userService.createUser(any(User.class))).thenReturn(savedUser);
 
-            // Act
             ResponseEntity<?> response = userController.createUser(requestUser);
 
-            // Assert
             assertNotNull(response);
             assertEquals(HttpStatus.CREATED, response.getStatusCode());
             assertTrue(response.getBody() instanceof User);
             assertEquals(1L, ((User) response.getBody()).getId());
 
-            // Verify
             verify(userService).createUser(requestUser);
         }
 
@@ -110,10 +102,8 @@ class ApiTestingDemoTest {
         void shouldReturnBadRequestWhenRequiredFieldsAreMissing() {
             User invalidUser = new User(null, "Alice", "alice", "", "123456", "alice.com");
 
-            // Act
             ResponseEntity<?> response = userController.createUser(invalidUser);
 
-            // Assert
             assertNotNull(response);
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
             assertTrue(response.getBody() instanceof Map);

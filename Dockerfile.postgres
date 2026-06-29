@@ -1,15 +1,8 @@
-# Use the official lightweight PostgreSQL image
 FROM postgres:16-alpine
 
-# Set default environment variables
-# (Best practice: override these in your deployment or docker-compose)
 ENV POSTGRES_DB=demodb
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 
-# Optional: Add any custom initialization SQL scripts to docker-entrypoint-initdb.d/
-# Scripts in this directory are run in alphabetical order when the container starts
-# COPY ./init.sql /docker-entrypoint-initdb.d/
-
-# Expose the default PostgreSQL port
 EXPOSE 5432
+
